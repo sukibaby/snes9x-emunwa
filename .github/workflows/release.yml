@@ -2,8 +2,8 @@ name: Release Build
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 
 permissions:
   contents: write
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: release
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -24,9 +24,9 @@ jobs:
           sudo apt install -y libgtkmm-3.0-dev libportaudio2 portaudio19-dev libsdl2-dev libsdl2-ttf-2.0-0 gettext
           git submodule update --init --recursive
 
-      - name: Set build version from date
+      - name: Set build version from tag
         run: |
-          VERSION=$(date +%Y.%m.%d)
+          echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
       - name: Build for Linux
         run: |
@@ -55,8 +55,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create snes9x-emunwa-${{ env.VERSION }} \
+          gh release create "${{ env.VERSION }}" \
             --title "${{ env.VERSION }}" \
             --target ${{ github.sha }} \
-            --notes "Automated build triggered by push to master branch." \
+            --notes "Automated build triggered by tag push." \
             release/*.xz
