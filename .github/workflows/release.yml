@@ -27,14 +27,14 @@ jobs:
 
       - name: Compress binary
         run: |
-          lzma -z -e snes9x-gtk
+          xz -z -e snes9x-gtk
 
       - name: Upload Linux build artifacts
         uses: actions/upload-artifact@v7
         with:
           name: release-linux
           path: |
-            release/*.lzma
+            release/*.xz
           if-no-files-found: error
           retention-days: 90
 
