@@ -51,12 +51,17 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-      - name: Create GitHub release from generated artifacts
+      - name: Create or update GitHub release from generated artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ env.VERSION }}" \
-            --title "${{ env.VERSION }}" \
-            --target ${{ github.sha }} \
-            --notes "Automated build triggered by tag push." \
-            release/*.xz
+          RELEASE_TAG="${{ env.VERSION }}"
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" release/*.xz --clobber
+          else
+            gh release create "$RELEASE_TAG" \
+              --title "$RELEASE_TAG" \
+              --target ${{ github.sha }} \
+              --notes "Automated build triggered by tag push." \
+              release/*.xz
+          fi
