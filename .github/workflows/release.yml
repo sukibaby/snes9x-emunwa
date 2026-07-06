@@ -18,6 +18,10 @@ jobs:
           sudo apt install -y libgtkmm-3.0-dev libportaudio2 portaudio19-dev libsdl2-dev libsdl2-ttf-2.0-0 gettext
           git submodule update --init --recursive
 
+      - name: Set build version from date
+        run: |
+          VERSION=$(date +%Y.%m.%d)
+
       - name: Build for Linux
         run: |
           cd gtk
@@ -49,4 +53,4 @@ jobs:
             --title "${{ env.VERSION }}" \
             --target ${{ github.sha }} \
             --notes "Automated build triggered by push to master branch." \
-            release-artifacts/**/*
+            release/*.xz
