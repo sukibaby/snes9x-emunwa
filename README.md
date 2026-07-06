@@ -1,3 +1,5 @@
+# SNES9X-nwa fixed Linux version
+
 > **Maintenance fork notice**
 >
 > This repository is a maintenance continuation of the original `snes9x-emunwa` fork.
