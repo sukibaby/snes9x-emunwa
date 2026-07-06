@@ -13,16 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Install dependencies
+      - name: Install dependencies & submodules
         run: |
           sudo apt install -y libgtkmm-3.0-dev libportaudio2 portaudio19-dev
-
-      - name: Initialize submodules
-        run: |
-          cd snes9x-emunwa
           git submodule update --init --recursive
 
-      - name: Build GTK project
+      - name: Build for Linux
         run: |
           cd gtk
           cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -S . -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5
