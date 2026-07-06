@@ -1,0 +1,58 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Update package manager
+        run: |
+          sudo apt update
+          sudo apt upgrade -y
+
+      - name: Install dependencies
+        run: |
+          sudo apt install -y libgtkmm-3.0-dev libportaudio2 portaudio19-dev
+
+      - name: Initialize submodules
+        run: |
+          cd snes9x
+          git submodule update --init --recursive
+
+      - name: Build GTK project
+        run: |
+          cd snes9x/gtk
+          cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -S . -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+          cd build
+          ninja
+
+      - name: Compress binary
+        run: |
+          lzma -z -e snes9x-gtk
+
+      - name: Upload Linux build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-linux
+          path: |
+            release/*.lzma
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Create GitHub release from generated artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create snes9x-emunwa-${{ env.VERSION }} \
+            --title "${{ env.VERSION }}" \
+            --target ${{ github.sha }} \
+            --notes "Automated build triggered by push to master branch." \
+            release-artifacts/**/*
