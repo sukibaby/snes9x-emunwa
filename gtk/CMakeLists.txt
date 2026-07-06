@@ -87,7 +87,7 @@ list(APPEND INCLUDES ../emu-nwaccess/)
 
 if(USE_SLANG)
     list(APPEND SOURCES ../shaders/slang.cpp)
-    list(APPEND INCLUDES ../external/glslang)
+    list(APPEND INCLUDES ../external/glslang-edited)
 
     set(SPIRV_CROSS_EXCEPTIONS_TO_ASSERTIONS CACHE BOOL ON)
     set(BUILD_TESTING CACHE BOOL OFF)
