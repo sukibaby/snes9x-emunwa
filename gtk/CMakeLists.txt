@@ -87,7 +87,7 @@ list(APPEND INCLUDES ../emu-nwaccess/)
 
 if(USE_SLANG)
     list(APPEND SOURCES ../shaders/slang.cpp)
-    list(APPEND INCLUDES ../external/glslang-edited)
+    list(APPEND INCLUDES ../external/glslang-edited-edited)
 
     set(SPIRV_CROSS_EXCEPTIONS_TO_ASSERTIONS CACHE BOOL ON)
     set(BUILD_TESTING CACHE BOOL OFF)
@@ -103,7 +103,7 @@ if(USE_SLANG)
                      spirv-cross-reflect
                      spirv-cross-cpp)
     list(APPEND DEFINES "USE_SLANG")
-    list(APPEND INCLUDES "../external/glslang")
+    list(APPEND INCLUDES "../external/glslang-edited")
 
     list(APPEND DEFINES "VK_USE_PLATFORM_XLIB_KHR"
                         "VK_USE_PLATFORM_WAYLAND_KHR"

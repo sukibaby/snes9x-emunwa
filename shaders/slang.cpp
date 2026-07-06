@@ -9,9 +9,9 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include "external/glslang/glslang/Public/ShaderLang.h"
-#include "external/glslang/SPIRV/GlslangToSpv.h"
-#include "external/glslang/glslang/Public/ResourceLimits.h"
+#include "external/glslang-edited/glslang/Public/ShaderLang.h"
+#include "external/glslang-edited/SPIRV/GlslangToSpv.h"
+#include "external/glslang-edited/glslang/Public/ResourceLimits.h"
 #include "external/SPIRV-Cross/spirv_cross.hpp"
 #include "external/SPIRV-Cross/spirv_glsl.hpp"
 

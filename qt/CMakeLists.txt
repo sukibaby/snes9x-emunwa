@@ -209,7 +209,7 @@ list(APPEND LIBS cubeb)
 list(APPEND INCLUDES "../external/cubeb/include")
 
 set(BUILD_TESTING CACHE BOOL OFF)
-add_subdirectory("../external/glslang" "glslang" EXCLUDE_FROM_ALL)
+add_subdirectory("../external/glslang-edited" "glslang" EXCLUDE_FROM_ALL)
 list(APPEND LIBS
     glslang
     OGLCompiler
@@ -217,7 +217,7 @@ list(APPEND LIBS
     OSDependent
     SPIRV
     glslang-default-resource-limits)
-list(APPEND INCLUDES "../external/glslang")
+list(APPEND INCLUDES "../external/glslang-edited")
 
 set(SPIRV_CROSS_EXCEPTIONS_TO_ASSERTIONS CACHE BOOL ON)
 add_subdirectory("../external/SPIRV-Cross" "SPIRV-Cross" EXCLUDE_FROM_ALL)
