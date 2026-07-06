@@ -86,6 +86,7 @@ list(APPEND INCLUDES ../external/glad/include)
 list(APPEND INCLUDES ../emu-nwaccess/)
 
 if(USE_SLANG)
+    add_subdirectory("../external/glslang-edited" "glslang" EXCLUDE_FROM_ALL)
     list(APPEND SOURCES ../shaders/slang.cpp)
     list(APPEND INCLUDES ../external/glslang-edited-edited)
 
