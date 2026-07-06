@@ -25,9 +25,12 @@ jobs:
           cd build
           ninja
 
-      - name: Compress binary
+      - name: Compress binary and prepare for upload
         run: |
+          mkdir release
+          cd gtk/build
           xz -z -e snes9x-gtk
+          mv snes9x-gtk.xz ../../release/snes9x-gtk3-linux-x86_64-${{ env.VERSION }}.xz
 
       - name: Upload Linux build artifacts
         uses: actions/upload-artifact@v7
